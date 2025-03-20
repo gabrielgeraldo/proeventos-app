@@ -1,0 +1,85 @@
+<div class="card rounded shadow-sm p-3">
+
+  <div class="d-flex">
+      <div>
+        <div class="form-group mb-2">
+          <div class="flex-fill pr-3">
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Filtro: </div>
+              </div>
+              <input
+              type="text"
+              class="form-control"
+              placeholder="Filtrar por Tema e Espécies"
+              [(ngModel)]="filtroLista"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a class="d-flex btn btn-primary" routerLink="/rickemorty/detalhe">
+          <i class="fa fa-plus-circle my-1"></i>
+          <b class="ml-1 d-none d-sm-block">Novo</b>
+        </a>
+      </div>
+  
+  </div>
+  
+  <!-- <h3>Filtro: {{filtroLista}}</h3> -->
+  <table class="table table-striped shadow-sm table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th class="d-none d-md-table-cell">
+          <button type="button" class="btn btn-outline-light btn-sm"
+          (click)="alterarImagem()">
+          <i class="{{!exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+          {{!exibirImagem ? 'exibir' : 'ocultar'}}
+          </button>
+        </th>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Espécie</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="personagens && personagens.length">
+      <tr *ngFor="let personagem of personagensFiltrados" (click)="detalhePersonagem(personagem.id)" style="cursor: pointer;">
+        <td class="d-none d-md-table-cell">
+          <img [collapse]="!exibirImagem"
+               [isAnimated]="true"
+            src="{{personagem.image}}"
+            [style.width.px]="larguraImagem"
+            [style.margin.px]="margemImagem"
+          >
+        </td>
+        <td>{{personagem.id}}</td>
+        <td>{{personagem.name}}</td>
+        <td>{{personagem.species}}</td>
+        <td>{{personagem.status}}</td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!personagens.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum personagem encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  
+  </div>
+  
+  <br/>
+  
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Tem certeza que você quer deletar o personagem?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+    </div>
+  </ng-template>
+  
+  
+  
